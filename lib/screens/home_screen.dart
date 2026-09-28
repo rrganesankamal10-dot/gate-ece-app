@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDark = themeProvider.isDark;
+    final isDark = themeProvider.isDark || themeProvider.isStudy;
 
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: _pages),
@@ -86,11 +86,43 @@ class _HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = Provider.of<ProgressProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDark = themeProvider.isDark;
     final colorScheme = Theme.of(context).colorScheme;
+
+    // Theme cycle icon + tooltip
+    IconData themeIcon;
+    String themeTooltip;
+    switch (themeProvider.mode) {
+      case AppThemeMode.dark:
+        themeIcon = Icons.light_mode;
+        themeTooltip = 'Switch to Light Mode';
+        break;
+      case AppThemeMode.light:
+        themeIcon = Icons.nightlight_round;
+        themeTooltip = 'Switch to Study Mode 🌙';
+        break;
+      case AppThemeMode.study:
+        themeIcon = Icons.dark_mode;
+        themeTooltip = 'Switch to Dark Mode';
+        break;
+    }
+
+    // AppBar colors adapt to study mode
+    Color appBarBg = themeProvider.isStudy
+        ? ThemeProvider.studyBg
+        : themeProvider.isLight
+            ? const Color(0xFF0D47A1)
+            : const Color(0xFF071320);
+
+    Color themeBadgeColor = themeProvider.isStudy
+        ? const Color(0xFFFFD600)
+        : themeProvider.isLight
+            ? Colors.white70
+            : Colors.white;
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: appBarBg,
+        elevation: 0,
         title: Row(
           children: [
             const Text('⚡ ', style: TextStyle(fontSize: 22)),
@@ -105,6 +137,33 @@ class _HomeTab extends StatelessWidget {
           ],
         ),
         actions: [
+          // Study-mode badge
+          if (themeProvider.isStudy)
+            Container(
+              margin: const EdgeInsets.only(right: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFD600).withOpacity(0.15),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color(0xFFFFD600).withOpacity(0.5)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.nightlight_round, size: 14, color: Color(0xFFFFD600)),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Study Mode',
+                    style: GoogleFonts.inter(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFFFFD600),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          // Calculator shortcut
           IconButton(
             icon: const Icon(Icons.calculate, color: Color(0xFFFFD600)),
             tooltip: 'Virtual Calculator',
@@ -113,10 +172,11 @@ class _HomeTab extends StatelessWidget {
               MaterialPageRoute(builder: (_) => const VirtualCalculatorScreen()),
             ),
           ),
+          // Three-mode theme cycler
           IconButton(
-            icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode, color: Colors.white),
-            tooltip: 'Toggle theme',
-            onPressed: themeProvider.toggleTheme,
+            icon: Icon(themeIcon, color: themeBadgeColor),
+            tooltip: themeTooltip,
+            onPressed: themeProvider.cycleTheme,
           ),
         ],
       ),
@@ -126,7 +186,7 @@ class _HomeTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Hero banner
-            _HeroBanner(progress: progress),
+            _HeroBanner(progress: progress, themeProvider: themeProvider),
             const SizedBox(height: 20),
 
             // Stats row
@@ -178,6 +238,12 @@ class _HomeTab extends StatelessWidget {
             const _QuickActionsGrid(),
             const SizedBox(height: 24),
 
+            // Study tip banner (shown only in study mode)
+            if (themeProvider.isStudy) ...[
+              _StudyModeBanner(),
+              const SizedBox(height: 16),
+            ],
+
             // Topic progress
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -213,6 +279,48 @@ class _HomeTab extends StatelessWidget {
   }
 }
 
+// ─── STUDY MODE BANNER ───────────────────────────────────────────────────────
+class _StudyModeBanner extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFD600).withOpacity(0.08),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFFFD600).withOpacity(0.3)),
+      ),
+      child: Row(
+        children: [
+          const Text('🌙', style: TextStyle(fontSize: 24)),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Study Mode Active',
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xFFFFD600),
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'Warm amber tones reduce eye strain for late-night study sessions. Tap the moon icon to switch modes.',
+                  style: GoogleFonts.inter(fontSize: 11, color: ThemeProvider.studyText.withOpacity(0.7)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── FEATURED ACTION CARD ────────────────────────────────────────────────────
 class _FeaturedActionCard extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -269,25 +377,34 @@ class _FeaturedActionCard extends StatelessWidget {
   }
 }
 
+// ─── HERO BANNER ────────────────────────────────────────────────────────────
 class _HeroBanner extends StatelessWidget {
   final ProgressProvider progress;
-  const _HeroBanner({required this.progress});
+  final ThemeProvider themeProvider;
+  const _HeroBanner({required this.progress, required this.themeProvider});
 
   @override
   Widget build(BuildContext context) {
     final pct = progress.overallPercent;
+
+    List<Color> bannerGradient = themeProvider.isStudy
+        ? [const Color(0xFF2A1A00), const Color(0xFF3D2600)]
+        : [const Color(0xFF1565C0), const Color(0xFF0D47A1)];
+
+    Color accentColor = const Color(0xFFFFD600);
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF1565C0), Color(0xFF0D47A1)],
+        gradient: LinearGradient(
+          colors: bannerGradient,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF1565C0).withOpacity(0.4),
+            color: bannerGradient.first.withOpacity(0.4),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -318,7 +435,7 @@ class _HeroBanner extends StatelessWidget {
                   Text(
                     'Engineered by Kamal',
                     style: GoogleFonts.inter(
-                      color: const Color(0xFFFFD600),
+                      color: accentColor,
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                     ),
@@ -337,7 +454,7 @@ class _HeroBanner extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
-                progressColor: const Color(0xFFFFD600),
+                progressColor: accentColor,
                 backgroundColor: Colors.white24,
               ),
             ],
@@ -347,7 +464,7 @@ class _HeroBanner extends StatelessWidget {
             percent: pct,
             lineHeight: 8,
             backgroundColor: Colors.white24,
-            progressColor: const Color(0xFFFFD600),
+            progressColor: accentColor,
             barRadius: const Radius.circular(10),
             padding: EdgeInsets.zero,
           ),
@@ -362,6 +479,7 @@ class _HeroBanner extends StatelessWidget {
   }
 }
 
+// ─── STATS ROW ───────────────────────────────────────────────────────────────
 class _StatsRow extends StatelessWidget {
   final ProgressProvider progress;
   const _StatsRow({required this.progress});
@@ -423,6 +541,7 @@ class _StatCard extends StatelessWidget {
   }
 }
 
+// ─── QUICK ACTIONS GRID ──────────────────────────────────────────────────────
 class _QuickActionsGrid extends StatelessWidget {
   const _QuickActionsGrid();
 
@@ -474,6 +593,7 @@ class _QuickActionsGrid extends StatelessWidget {
   }
 }
 
+// ─── TOPIC PROGRESS TILE ─────────────────────────────────────────────────────
 class _TopicProgressTile extends StatelessWidget {
   final dynamic topic;
   final ProgressProvider progress;
@@ -518,6 +638,7 @@ class _TopicProgressTile extends StatelessWidget {
   }
 }
 
+// ─── ABOUT CARD ──────────────────────────────────────────────────────────────
 class _AboutCard extends StatelessWidget {
   const _AboutCard();
 
@@ -542,7 +663,7 @@ class _AboutCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'GATE ECE Master is designed by Kamal to provide world-class, error-free preparation for GATE & PSU engineering aspirants. '
-              'Featuring real-time circuit simulation, TCS iON virtual calculator, verified formulas, and chapter derivations.',
+              'Featuring real-time circuit simulation, TCS iON virtual calculator, verified formulas, chapter derivations, and three eye-comfort themes.',
               style: GoogleFonts.inter(fontSize: 13, height: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
             ),
             const SizedBox(height: 10),
@@ -554,7 +675,10 @@ class _AboutCard extends StatelessWidget {
                     color: Colors.green.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Text('Version 1.0.0 · Production Ready', style: GoogleFonts.inter(fontSize: 11, color: Colors.greenAccent, fontWeight: FontWeight.w700)),
+                  child: Text(
+                    'Version 1.0.0 · Production Ready ✅',
+                    style: GoogleFonts.inter(fontSize: 11, color: Colors.greenAccent, fontWeight: FontWeight.w700),
+                  ),
                 ),
               ],
             ),
