@@ -1,4 +1,4 @@
-package com.kamalraj.gateeceapp
+package com.kamal.gateece
 
 import io.flutter.embedding.android.FlutterActivity
 

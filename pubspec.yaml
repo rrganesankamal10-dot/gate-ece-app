@@ -1,24 +1,33 @@
-name: gate_ece_app
-description: GATE ECE study companion — formulas, quizzes, circuit diagrams.
+name: gate_ece_master
+description: "GATE ECE Master - Professional GATE Electronics & Communication Engineering Prep App by Kamal"
 publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.2.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  provider: ^6.1.2
+  shared_preferences: ^2.2.3
+  fl_chart: ^0.69.0
+  flutter_math_fork: ^0.7.2
+  percent_indicator: ^4.2.3
+  google_fonts: ^6.2.1
+  lottie: ^3.1.0
+  flutter_svg: ^2.0.10+1
+  animated_text_kit: ^4.2.3
+  confetti: ^0.7.0
   intl: ^0.19.0
-  shared_preferences: ^2.2.2
-  # google_mobile_ads: ^5.1.0   # uncomment once we get to the ads step
-  # cloud_firestore: ^5.0.0    # uncomment once we connect Firebase for content
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/

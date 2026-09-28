@@ -1,49 +1,120 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'theme/app_theme.dart';
-import 'screens/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'providers/theme_provider.dart';
+import 'providers/progress_provider.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
-  runApp(const GateEceApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => ProgressProvider()),
+      ],
+      child: const GateEceMasterApp(),
+    ),
+  );
 }
 
-class GateEceApp extends StatefulWidget {
-  const GateEceApp({super.key});
-
-  @override
-  State<GateEceApp> createState() => _GateEceAppState();
-}
-
-class _GateEceAppState extends State<GateEceApp> {
-  bool _isDark = false;
-  static const _prefKey = 'is_dark_mode';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadThemePreference();
-  }
-
-  Future<void> _loadThemePreference() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() => _isDark = prefs.getBool(_prefKey) ?? false);
-  }
-
-  Future<void> _toggleTheme() async {
-    setState(() => _isDark = !_isDark);
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_prefKey, _isDark);
-  }
+class GateEceMasterApp extends StatelessWidget {
+  const GateEceMasterApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
-      title: 'GATE ECE Companion',
+      title: 'GATE ECE Master',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: _isDark ? ThemeMode.dark : ThemeMode.light,
-      home: HomeScreen(isDarkMode: _isDark, onToggleTheme: _toggleTheme),
+      themeMode: themeProvider.themeMode,
+      theme: _buildLightTheme(),
+      darkTheme: _buildDarkTheme(),
+      home: const SplashScreen(),
+    );
+  }
+
+  ThemeData _buildLightTheme() {
+    const primaryColor = Color(0xFF0D47A1);
+    const accentColor = Color(0xFFFFD600);
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primaryColor,
+        brightness: Brightness.light,
+        primary: primaryColor,
+        secondary: accentColor,
+        surface: Colors.white,
+        onPrimary: Colors.white,
+        onSecondary: Colors.black,
+      ),
+      textTheme: GoogleFonts.interTextTheme(),
+      appBarTheme: AppBarTheme(
+        backgroundColor: primaryColor,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        titleTextStyle: GoogleFonts.inter(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      cardTheme: CardTheme(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primaryColor,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        ),
+      ),
+    );
+  }
+
+  ThemeData _buildDarkTheme() {
+    const primaryColor = Color(0xFF1565C0);
+    const accentColor = Color(0xFFFFD600);
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primaryColor,
+        brightness: Brightness.dark,
+        primary: primaryColor,
+        secondary: accentColor,
+        surface: const Color(0xFF0D1B2A),
+        onPrimary: Colors.white,
+        onSecondary: Colors.black,
+      ),
+      scaffoldBackgroundColor: const Color(0xFF0D1B2A),
+      textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+      appBarTheme: AppBarTheme(
+        backgroundColor: const Color(0xFF0D1B2A),
+        foregroundColor: Colors.white,
+        elevation: 0,
+        titleTextStyle: GoogleFonts.inter(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      cardTheme: CardTheme(
+        color: const Color(0xFF162032),
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primaryColor,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        ),
+      ),
     );
   }
 }
