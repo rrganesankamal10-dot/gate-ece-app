@@ -15,6 +15,10 @@ import 'virtual_calculator_screen.dart';
 import 'flashcards_screen.dart';
 import 'notes_screen.dart';
 import 'syllabus_guide_screen.dart';
+import 'learning_path_screen.dart';
+import 'previous_papers_screen.dart';
+import 'streak_screen.dart';
+import 'score_guide_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -493,6 +497,10 @@ class _StatsRow extends StatelessWidget {
           value: '${progress.streak}',
           label: 'Day Streak',
           color: const Color(0xFFE65100),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const StreakScreen()),
+          ),
         ),
         const SizedBox(width: 10),
         _StatCard(
@@ -507,6 +515,10 @@ class _StatsRow extends StatelessWidget {
           value: '${gateTopics.length}',
           label: 'Subjects',
           color: const Color(0xFF1565C0),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const TopicsScreen()),
+          ),
         ),
       ],
     );
@@ -516,25 +528,37 @@ class _StatsRow extends StatelessWidget {
 class _StatCard extends StatelessWidget {
   final String icon, value, label;
   final Color color;
-  const _StatCard({required this.icon, required this.value, required this.label, required this.color});
+  final VoidCallback? onTap;
+
+  const _StatCard({
+    required this.icon,
+    required this.value,
+    required this.label,
+    required this.color,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: color.withOpacity(0.2)),
-        ),
-        child: Column(
-          children: [
-            Text(icon, style: const TextStyle(fontSize: 22)),
-            const SizedBox(height: 4),
-            Text(value, style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 20, color: color)),
-            Text(label, style: GoogleFonts.inter(fontSize: 10, color: color.withOpacity(0.8))),
-          ],
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: color.withOpacity(0.2)),
+          ),
+          child: Column(
+            children: [
+              Text(icon, style: const TextStyle(fontSize: 22)),
+              const SizedBox(height: 4),
+              Text(value, style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 20, color: color)),
+              Text(label, style: GoogleFonts.inter(fontSize: 10, color: color.withOpacity(0.8))),
+            ],
+          ),
         ),
       ),
     );
@@ -548,10 +572,12 @@ class _QuickActionsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actions = [
-      {'icon': Icons.calculate_outlined, 'label': 'Calculators', 'color': const Color(0xFF1565C0), 'screen': const CalculatorsScreen()},
-      {'icon': Icons.style_outlined, 'label': 'Flashcards', 'color': const Color(0xFF6A1B9A), 'screen': const FlashcardsScreen()},
       {'icon': Icons.tune, 'label': 'TCS Virtual Calc', 'color': const Color(0xFFE65100), 'screen': const VirtualCalculatorScreen()},
-      {'icon': Icons.checklist_rtl, 'label': 'Exam Strategy', 'color': const Color(0xFF1B5E20), 'screen': const SyllabusGuideScreen()},
+      {'icon': Icons.bolt, 'label': 'Streak & Goals', 'color': const Color(0xFFFF8F00), 'screen': const StreakScreen()},
+      {'icon': Icons.history_edu, 'label': 'GATE PYQ Papers', 'color': const Color(0xFF1565C0), 'screen': const PreviousPapersScreen()},
+      {'icon': Icons.map_outlined, 'label': 'Learning Path', 'color': const Color(0xFF00897B), 'screen': const LearningPathScreen()},
+      {'icon': Icons.style_outlined, 'label': 'Flashcards', 'color': const Color(0xFF6A1B9A), 'screen': const FlashcardsScreen()},
+      {'icon': Icons.military_tech_outlined, 'label': 'PSU & Score Guide', 'color': const Color(0xFF2E7D32), 'screen': const ScoreGuideScreen()},
     ];
 
     return GridView.count(
@@ -560,7 +586,7 @@ class _QuickActionsGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
-      childAspectRatio: 2.2,
+      childAspectRatio: 2.3,
       children: actions.map((a) {
         return InkWell(
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => a['screen'] as Widget)),
@@ -574,14 +600,17 @@ class _QuickActionsGrid extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(a['icon'] as IconData, color: a['color'] as Color, size: 24),
-                const SizedBox(width: 10),
-                Text(
-                  a['label'] as String,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w700,
-                    color: a['color'] as Color,
-                    fontSize: 13,
+                Icon(a['icon'] as IconData, color: a['color'] as Color, size: 22),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    a['label'] as String,
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w700,
+                      color: a['color'] as Color,
+                      fontSize: 12,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],

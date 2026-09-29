@@ -1,3 +1,4 @@
+// lib/providers/progress_provider.dart
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,12 +12,29 @@ class ProgressProvider extends ChangeNotifier {
   int _streak = 0;
   DateTime? _lastActiveDate;
 
+  // Duolingo-style Streak & Gamification fields
+  int _streakFreezes = 2; // Duolingo streak freeze shields
+  int _dailyGoal = 3;     // Target modules/quizzes per day
+  int _todayCompleted = 0;
+  String? _todayDateStr;
+
+  // Module tracking & Chapter quiz scores
+  Map<String, Set<int>> _moduleProgress = {}; // topicId -> set of completed module indices
+  Map<String, int> _chapterQuizScores = {}; // topicId -> best score
+
   Map<String, int> get topicProgress => _topicProgress;
   Map<String, int> get topicTotal => _topicTotal;
   Map<String, List<bool>> get mockResults => _mockResults;
   Set<String> get bookmarkedFormulas => _bookmarkedFormulas;
   int get totalXP => _totalXP;
   int get streak => _streak;
+  DateTime? get lastActiveDate => _lastActiveDate;
+
+  int get streakFreezes => _streakFreezes;
+  int get dailyGoal => _dailyGoal;
+  int get todayCompleted => _todayCompleted;
+  double get dailyGoalPercent => (_todayCompleted / _dailyGoal).clamp(0.0, 1.0);
+  bool get isDailyGoalMet => _todayCompleted >= _dailyGoal;
 
   ProgressProvider() {
     _load();
@@ -44,6 +62,7 @@ class ProgressProvider extends ChangeNotifier {
     _topicTotal[topicId] = totalInTopic;
     _topicProgress[topicId] = (_topicProgress[topicId] ?? 0) + 1;
     if (correct) _totalXP += 10;
+    _incrementToday();
     _updateStreak();
     await _save();
     notifyListeners();
@@ -53,6 +72,7 @@ class ProgressProvider extends ChangeNotifier {
     _mockResults[mockId] = results;
     int correct = results.where((r) => r).length;
     _totalXP += correct * 15;
+    _incrementToday();
     _updateStreak();
     await _save();
     notifyListeners();
@@ -70,22 +90,111 @@ class ProgressProvider extends ChangeNotifier {
 
   bool isBookmarked(String formulaId) => _bookmarkedFormulas.contains(formulaId);
 
+  // ─── MODULE PROGRESS ────────────────────────────────────────────────────────
+
+  /// Mark a module as complete. Adds XP, updates streak, and increments daily goal.
+  Future<void> markModuleComplete(String topicId, int moduleIndex, int totalModules) async {
+    _moduleProgress[topicId] ??= {};
+    final wasNew = !_moduleProgress[topicId]!.contains(moduleIndex);
+    _moduleProgress[topicId]!.add(moduleIndex);
+
+    if (wasNew) {
+      _totalXP += 20;
+      // Update topic-level progress based on modules
+      _topicTotal[topicId] = totalModules;
+      _topicProgress[topicId] = _moduleProgress[topicId]!.length;
+      _incrementToday();
+      _updateStreak();
+    }
+
+    await _save();
+    notifyListeners();
+  }
+
+  /// Returns true if the specific module index for a topic is complete.
+  bool isModuleComplete(String topicId, int moduleIndex) {
+    return _moduleProgress[topicId]?.contains(moduleIndex) ?? false;
+  }
+
+  /// Returns true if ALL modules for the given topic are complete.
+  bool isTopicFullyComplete(String topicId) {
+    final total = _topicTotal[topicId] ?? 0;
+    if (total == 0) return false;
+    return (_moduleProgress[topicId]?.length ?? 0) >= total;
+  }
+
+  /// Returns the number of completed modules for a topic.
+  int completedModules(String topicId) {
+    return _moduleProgress[topicId]?.length ?? 0;
+  }
+
+  // ─── CHAPTER QUIZ SCORES ────────────────────────────────────────────────────
+
+  /// Record the result of a chapter quiz. Stores the best (highest) score.
+  Future<void> recordChapterQuizResult(String topicId, int score, int total) async {
+    final existing = _chapterQuizScores[topicId] ?? 0;
+    if (score > existing) {
+      _chapterQuizScores[topicId] = score;
+    }
+    // Award bonus XP for the quiz (up to +50 XP)
+    _totalXP += score * 10;
+    _incrementToday();
+    _updateStreak();
+    await _save();
+    notifyListeners();
+  }
+
+  /// Returns the best chapter quiz score for a given topic.
+  int getChapterQuizScore(String topicId) {
+    return _chapterQuizScores[topicId] ?? 0;
+  }
+
+  // ─── STREAK & FREEZES (DUOLINGO STYLE) ───────────────────────────────────────
+
+  void _incrementToday() {
+    final today = _dateKey(DateTime.now());
+    if (_todayDateStr != today) {
+      _todayDateStr = today;
+      _todayCompleted = 1;
+    } else {
+      _todayCompleted++;
+    }
+  }
+
   void _updateStreak() {
-    final today = DateTime.now();
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
     if (_lastActiveDate == null) {
       _streak = 1;
     } else {
-      final diff = today.difference(_lastActiveDate!).inDays;
+      final last = DateTime(_lastActiveDate!.year, _lastActiveDate!.month, _lastActiveDate!.day);
+      final diff = today.difference(last).inDays;
       if (diff == 0) {
-        // same day, no change
+        // Already active today; retain streak
       } else if (diff == 1) {
+        // Consecutive day
         _streak++;
+      } else if (diff == 2 && _streakFreezes > 0) {
+        // Missed one day, but streak freeze saved it!
+        _streakFreezes--;
+        _streak++; // continue streak
       } else {
+        // Streak reset to 1
         _streak = 1;
       }
     }
     _lastActiveDate = today;
   }
+
+  Future<void> addStreakFreeze() async {
+    _streakFreezes++;
+    await _save();
+    notifyListeners();
+  }
+
+  String _dateKey(DateTime dt) => '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
+
+  // ─── PERSISTENCE ────────────────────────────────────────────────────────────
 
   Future<void> _save() async {
     final prefs = await SharedPreferences.getInstance();
@@ -97,9 +206,19 @@ class ProgressProvider extends ChangeNotifier {
     await prefs.setStringList('bookmarks', _bookmarkedFormulas.toList());
     await prefs.setInt('totalXP', _totalXP);
     await prefs.setInt('streak', _streak);
+    await prefs.setInt('streakFreezes', _streakFreezes);
+    await prefs.setInt('dailyGoal', _dailyGoal);
+    await prefs.setInt('todayCompleted', _todayCompleted);
+    if (_todayDateStr != null) {
+      await prefs.setString('todayDateStr', _todayDateStr!);
+    }
     if (_lastActiveDate != null) {
       await prefs.setString('lastActive', _lastActiveDate!.toIso8601String());
     }
+    await prefs.setString('moduleProgress', jsonEncode(
+      _moduleProgress.map((k, v) => MapEntry(k, v.toList()))
+    ));
+    await prefs.setString('chapterQuizScores', jsonEncode(_chapterQuizScores));
   }
 
   Future<void> _load() async {
@@ -110,8 +229,20 @@ class ProgressProvider extends ChangeNotifier {
     final bm = prefs.getStringList('bookmarks');
     _totalXP = prefs.getInt('totalXP') ?? 0;
     _streak = prefs.getInt('streak') ?? 0;
+    _streakFreezes = prefs.getInt('streakFreezes') ?? 2;
+    _dailyGoal = prefs.getInt('dailyGoal') ?? 3;
+    _todayCompleted = prefs.getInt('todayCompleted') ?? 0;
+    _todayDateStr = prefs.getString('todayDateStr');
+
+    final today = _dateKey(DateTime.now());
+    if (_todayDateStr != today) {
+      _todayDateStr = today;
+      _todayCompleted = 0;
+    }
+
     final la = prefs.getString('lastActive');
     if (la != null) _lastActiveDate = DateTime.tryParse(la);
+
     if (tp != null) {
       _topicProgress = Map<String, int>.from(jsonDecode(tp));
     }
@@ -124,6 +255,19 @@ class ProgressProvider extends ChangeNotifier {
         MapEntry(k, (v as List).map((e) => e == 1).toList()));
     }
     if (bm != null) _bookmarkedFormulas = bm.toSet();
+
+    final mp = prefs.getString('moduleProgress');
+    if (mp != null) {
+      final raw = Map<String, dynamic>.from(jsonDecode(mp));
+      _moduleProgress = raw.map((k, v) =>
+        MapEntry(k, Set<int>.from((v as List).map((e) => e as int))));
+    }
+
+    final cqs = prefs.getString('chapterQuizScores');
+    if (cqs != null) {
+      _chapterQuizScores = Map<String, int>.from(jsonDecode(cqs));
+    }
+
     notifyListeners();
   }
 }
