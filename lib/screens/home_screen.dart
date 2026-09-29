@@ -574,7 +574,7 @@ class _QuickActionsGrid extends StatelessWidget {
     final actions = [
       {'icon': Icons.tune, 'label': 'TCS Virtual Calc', 'color': const Color(0xFFE65100), 'screen': const VirtualCalculatorScreen()},
       {'icon': Icons.bolt, 'label': 'Streak & Goals', 'color': const Color(0xFFFF8F00), 'screen': const StreakScreen()},
-      {'icon': Icons.history_edu, 'label': 'GATE PYQ Papers', 'color': const Color(0xFF1565C0), 'screen': const PreviousPapersScreen()},
+      {'icon': Icons.history_edu, 'label': 'GATE PYQ Papers', 'color': const Color(0xFF1565C0), 'screen': const PreviousYearsScreen()},
       {'icon': Icons.map_outlined, 'label': 'Learning Path', 'color': const Color(0xFF00897B), 'screen': const LearningPathScreen()},
       {'icon': Icons.style_outlined, 'label': 'Flashcards', 'color': const Color(0xFF6A1B9A), 'screen': const FlashcardsScreen()},
       {'icon': Icons.military_tech_outlined, 'label': 'PSU & Score Guide', 'color': const Color(0xFF2E7D32), 'screen': const ScoreGuideScreen()},

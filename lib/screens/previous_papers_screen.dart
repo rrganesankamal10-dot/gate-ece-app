@@ -594,3 +594,6 @@ class _QuestionCardState extends State<_QuestionCard> {
     );
   }
 }
+
+/// Alias for backwards compatibility
+typedef PreviousPapersScreen = PreviousYearsScreen;
