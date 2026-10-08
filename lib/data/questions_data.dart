@@ -1357,3 +1357,90 @@ const Map<String, List<String>> faqTopics = {
     'Taylor/Maclaurin Series',
   ],
 };
+
+// ============================================================================
+// GATE ECE MOCK TESTS
+// ============================================================================
+const List<MockTest> mockTests = [
+  MockTest(
+    id: 'mock_01',
+    title: 'GATE ECE 2024 — Full Grand Mock Test',
+    description: '65 questions · 3 hours · Comprehensive test covering all 9 subjects',
+    durationMinutes: 180,
+    questionIds: [
+      'q_net_01', 'q_net_02', 'q_net_03', 'q_net_04', 'q_net_05',
+      'q_sig_01', 'q_sig_02', 'q_sig_03', 'q_sig_04', 'q_sig_05',
+      'q_edc_01', 'q_edc_02', 'q_edc_03', 'q_edc_04', 'q_edc_05',
+      'q_ana_01', 'q_ana_02', 'q_ana_03', 'q_ana_04', 'q_ana_05',
+      'q_dig_01', 'q_dig_02', 'q_dig_03', 'q_dig_04', 'q_dig_05',
+      'q_ctrl_01', 'q_ctrl_02', 'q_ctrl_03', 'q_ctrl_04', 'q_ctrl_05',
+      'q_com_01', 'q_com_02', 'q_com_03', 'q_com_04', 'q_com_05',
+      'q_em_01', 'q_em_02', 'q_em_03', 'q_em_04', 'q_em_05',
+      'q_math_01', 'q_math_02', 'q_math_03', 'q_math_04', 'q_math_05',
+    ],
+    totalMarks: 100,
+  ),
+  MockTest(
+    id: 'mock_02',
+    title: 'Networks & Signals — Sectional Test',
+    description: '15 questions · 45 minutes · Focus on Circuits, KVL, KCL, Laplace & Fourier',
+    durationMinutes: 45,
+    questionIds: [
+      'q_net_01', 'q_net_02', 'q_net_03', 'q_net_04', 'q_net_05',
+      'q_net_06', 'q_net_07', 'q_net_08',
+      'q_sig_01', 'q_sig_02', 'q_sig_03', 'q_sig_04', 'q_sig_05',
+      'q_sig_06', 'q_sig_07',
+    ],
+    totalMarks: 30,
+  ),
+  MockTest(
+    id: 'mock_03',
+    title: 'Semiconductor Devices & Analog Circuits',
+    description: '14 questions · 40 minutes · PN Junctions, MOSFETs, Op-Amps & Feedback',
+    durationMinutes: 40,
+    questionIds: [
+      'q_edc_01', 'q_edc_02', 'q_edc_03', 'q_edc_04', 'q_edc_05',
+      'q_edc_06', 'q_edc_07',
+      'q_ana_01', 'q_ana_02', 'q_ana_03', 'q_ana_04', 'q_ana_05',
+      'q_ana_06', 'q_ana_07',
+    ],
+    totalMarks: 28,
+  ),
+  MockTest(
+    id: 'mock_04',
+    title: 'Digital Systems & Control Engineering',
+    description: '14 questions · 40 minutes · K-Maps, Counters, Routh-Hurwitz, Bode & Nyquist',
+    durationMinutes: 40,
+    questionIds: [
+      'q_dig_01', 'q_dig_02', 'q_dig_03', 'q_dig_04', 'q_dig_05',
+      'q_dig_06', 'q_dig_07',
+      'q_ctrl_01', 'q_ctrl_02', 'q_ctrl_03', 'q_ctrl_04', 'q_ctrl_05',
+      'q_ctrl_06', 'q_ctrl_07',
+    ],
+    totalMarks: 28,
+  ),
+  MockTest(
+    id: 'mock_05',
+    title: 'Communications & Electromagnetics',
+    description: '14 questions · 40 minutes · AM/FM, Digital Modulations, Maxwell & Transmission Lines',
+    durationMinutes: 40,
+    questionIds: [
+      'q_com_01', 'q_com_02', 'q_com_03', 'q_com_04', 'q_com_05',
+      'q_com_06', 'q_com_07',
+      'q_em_01', 'q_em_02', 'q_em_03', 'q_em_04', 'q_em_05',
+      'q_em_06', 'q_em_07',
+    ],
+    totalMarks: 28,
+  ),
+  MockTest(
+    id: 'mock_06',
+    title: 'Engineering Mathematics Special Test',
+    description: '10 questions · 30 minutes · Linear Algebra, Calculus, Differential Equations & Probability',
+    durationMinutes: 30,
+    questionIds: [
+      'q_math_01', 'q_math_02', 'q_math_03', 'q_math_04', 'q_math_05',
+      'q_math_06', 'q_math_07', 'q_math_08', 'q_math_09', 'q_math_10',
+    ],
+    totalMarks: 20,
+  ),
+];
