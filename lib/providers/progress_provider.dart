@@ -46,11 +46,18 @@ class ProgressProvider extends ChangeNotifier {
     return (done / total).clamp(0.0, 1.0);
   }
 
+  static const int totalSyllabusModules = 90;
+
   double get overallPercent {
-    if (_topicTotal.isEmpty) return 0.0;
-    int done = _topicProgress.values.fold(0, (a, b) => a + b);
-    int total = _topicTotal.values.fold(0, (a, b) => a + b);
-    return total == 0 ? 0.0 : (done / total).clamp(0.0, 1.0);
+    int totalCompletedModules = 0;
+    for (final completedSet in _moduleProgress.values) {
+      totalCompletedModules += completedSet.length;
+    }
+    if (totalCompletedModules == 0) {
+      int done = _topicProgress.values.fold(0, (a, b) => a + b);
+      return (done / totalSyllabusModules).clamp(0.0, 1.0);
+    }
+    return (totalCompletedModules / totalSyllabusModules).clamp(0.0, 1.0);
   }
 
   int getMockScore(String mockId) {
@@ -90,7 +97,7 @@ class ProgressProvider extends ChangeNotifier {
 
   bool isBookmarked(String formulaId) => _bookmarkedFormulas.contains(formulaId);
 
-  // ─── MODULE PROGRESS ────────────────────────────────────────────────────────
+  // â”€â”€â”€ MODULE PROGRESS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Mark a module as complete. Adds XP, updates streak, and increments daily goal.
   Future<void> markModuleComplete(String topicId, int moduleIndex, int totalModules) async {
@@ -128,7 +135,7 @@ class ProgressProvider extends ChangeNotifier {
     return _moduleProgress[topicId]?.length ?? 0;
   }
 
-  // ─── CHAPTER QUIZ SCORES ────────────────────────────────────────────────────
+  // â”€â”€â”€ CHAPTER QUIZ SCORES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Record the result of a chapter quiz. Stores the best (highest) score.
   Future<void> recordChapterQuizResult(String topicId, int score, int total) async {
@@ -149,7 +156,7 @@ class ProgressProvider extends ChangeNotifier {
     return _chapterQuizScores[topicId] ?? 0;
   }
 
-  // ─── STREAK & FREEZES (DUOLINGO STYLE) ───────────────────────────────────────
+  // â”€â”€â”€ STREAK & FREEZES (DUOLINGO STYLE) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   void _incrementToday() {
     final today = _dateKey(DateTime.now());
@@ -194,7 +201,7 @@ class ProgressProvider extends ChangeNotifier {
 
   String _dateKey(DateTime dt) => '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
 
-  // ─── PERSISTENCE ────────────────────────────────────────────────────────────
+  // â”€â”€â”€ PERSISTENCE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   Future<void> _save() async {
     final prefs = await SharedPreferences.getInstance();

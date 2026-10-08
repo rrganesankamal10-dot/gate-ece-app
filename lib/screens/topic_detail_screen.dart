@@ -17,8 +17,8 @@ class TopicDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final topicQs = gateQuestions.where((q) => q.topicId == topic.id).toList();
-    final topicFormulas = gateFormulas.where((f) => f.topicId == topic.id).toList();
+    final topicQs = gateQuestions.where((q) => topicIdsMatch(q.topicId, topic.id)).toList();
+    final topicFormulas = gateFormulas.where((f) => topicIdsMatch(f.topicId, topic.id)).toList();
 
     return Scaffold(
       appBar: AppBar(

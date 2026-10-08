@@ -1,7 +1,8 @@
-﻿// lib/screens/faq_screen.dart
+// lib/screens/faq_screen.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../data/questions_data.dart';
+import '../data/topics_data.dart';
 
 class FaqScreen extends StatelessWidget {
   const FaqScreen({super.key});
@@ -65,7 +66,7 @@ class FaqScreen extends StatelessWidget {
           final name = _names[key] ?? key;
 
           // Count questions for this topic
-          final qCount = gateQuestions.where((q) => q.topicId == key).length;
+          final qCount = gateQuestions.where((q) => topicIdsMatch(q.topicId, key)).length;
 
           return Card(
             margin: const EdgeInsets.only(bottom: 12),
