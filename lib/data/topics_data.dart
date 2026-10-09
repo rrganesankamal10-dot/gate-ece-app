@@ -17,7 +17,7 @@ const List<GateTopic> gateTopics = [
     id: 'networks',
     name: 'Networks & Circuits',
     subtitle: 'KVL, KCL, Thevenin, Norton, Mesh & Node',
-    icon: 'âš¡',
+    icon: '⚡',
     color: '#1565C0',
     subtopics: [
       'KVL & KCL',
@@ -36,7 +36,7 @@ const List<GateTopic> gateTopics = [
     id: 'signals',
     name: 'Signals & Systems',
     subtitle: 'Fourier, Laplace, Z-transform, Sampling',
-    icon: 'ðŸ“Š',
+    icon: '📈',
     color: '#6A1B9A',
     subtopics: [
       'Continuous-Time Signals',
@@ -55,7 +55,7 @@ const List<GateTopic> gateTopics = [
     id: 'devices',
     name: 'Electronic Devices',
     subtitle: 'PN junction, BJT, MOSFET, Diodes',
-    icon: 'ðŸ’¡',
+    icon: '🔬',
     color: '#1B5E20',
     subtopics: [
       'Semiconductor Basics',
@@ -74,7 +74,7 @@ const List<GateTopic> gateTopics = [
     id: 'analog',
     name: 'Analog Circuits',
     subtitle: 'Amplifiers, Op-Amp, Filters, Oscillators',
-    icon: 'ðŸ”Š',
+    icon: '📻',
     color: '#E65100',
     subtopics: [
       'BJT Amplifiers',
@@ -93,7 +93,7 @@ const List<GateTopic> gateTopics = [
     id: 'digital',
     name: 'Digital Circuits',
     subtitle: 'Boolean algebra, Sequential, Combinational',
-    icon: 'ðŸ”¢',
+    icon: '💻',
     color: '#880E4F',
     subtopics: [
       'Number Systems',
@@ -112,7 +112,7 @@ const List<GateTopic> gateTopics = [
     id: 'control',
     name: 'Control Systems',
     subtitle: 'Transfer function, Bode, Root Locus, Routh',
-    icon: 'ðŸŽ›ï¸',
+    icon: '🎛️',
     color: '#004D40',
     subtopics: [
       'Transfer Functions',
@@ -131,7 +131,7 @@ const List<GateTopic> gateTopics = [
     id: 'communications',
     name: 'Communications',
     subtitle: 'AM, FM, PCM, PSK, QAM, Error correction',
-    icon: 'ðŸ“¡',
+    icon: '📡',
     color: '#BF360C',
     subtopics: [
       'Analog Modulation (AM)',
@@ -150,7 +150,7 @@ const List<GateTopic> gateTopics = [
     id: 'electromagnetics',
     name: 'Electromagnetics',
     subtitle: 'Maxwell, Waves, Transmission lines, Antennas',
-    icon: 'ðŸŒŠ',
+    icon: '🧲',
     color: '#01579B',
     subtopics: [
       'Vector Calculus Review',
@@ -169,7 +169,7 @@ const List<GateTopic> gateTopics = [
     id: 'math',
     name: 'Engineering Mathematics',
     subtitle: 'Linear Algebra, Calculus, Probability, DE',
-    icon: 'ðŸ“',
+    icon: '📐',
     color: '#37474F',
     subtopics: [
       'Linear Algebra',

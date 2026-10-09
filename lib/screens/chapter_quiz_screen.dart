@@ -351,11 +351,13 @@ List<_QuizQuestion> _getQuestionsForTopic(String topicId) {
 class ChapterQuizScreen extends StatefulWidget {
   final String topicId;
   final String topicName;
+  final Color? topicColor;
 
   const ChapterQuizScreen({
     super.key,
     required this.topicId,
     required this.topicName,
+    this.topicColor,
   });
 
   @override
