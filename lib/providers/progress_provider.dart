@@ -46,7 +46,7 @@ class ProgressProvider extends ChangeNotifier {
     return (done / total).clamp(0.0, 1.0);
   }
 
-  static const int totalSyllabusModules = 90;
+  static const int totalSyllabusUnits = 180; // 9 subjects * 20 units: 1 module = 0.55%, 1 whole chapter = ~11% (approx 10%)
 
   double get overallPercent {
     int totalCompletedModules = 0;
@@ -55,9 +55,9 @@ class ProgressProvider extends ChangeNotifier {
     }
     if (totalCompletedModules == 0) {
       int done = _topicProgress.values.fold(0, (a, b) => a + b);
-      return (done / totalSyllabusModules).clamp(0.0, 1.0);
+      return (done / totalSyllabusUnits).clamp(0.0, 1.0);
     }
-    return (totalCompletedModules / totalSyllabusModules).clamp(0.0, 1.0);
+    return (totalCompletedModules / totalSyllabusUnits).clamp(0.0, 1.0);
   }
 
   int getMockScore(String mockId) {

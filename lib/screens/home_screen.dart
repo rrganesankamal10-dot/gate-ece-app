@@ -346,7 +346,7 @@ class _HeroBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${(overall * 100).toInt()}% complete',
+                  '${(overall * 100 < 10 && overall > 0 ? (overall * 100).toStringAsFixed(1) : (overall * 100).toInt())}% complete',
                   style: GoogleFonts.inter(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
