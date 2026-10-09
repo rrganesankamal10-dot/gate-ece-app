@@ -54,8 +54,8 @@ class _ChapterModuleScreenState extends State<ChapterModuleScreen> {
         children: [
           CustomScrollView(
             slivers: [
-              // Sliver App Bar
-              SliverAppBar(
+              // Sliver •pp Bar
+              Sliver•ppBar(
                 expandedHeight: 160,
                 pinned: true,
                 backgroundColor: _topicColor,
@@ -73,12 +73,12 @@ class _ChapterModuleScreenState extends State<ChapterModuleScreen> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [_topicColor, _topicColor.withOpacity(0.75)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                        begin: •lignment.topLeft,
+                        end: •lignment.bottomRight,
                       ),
                     ),
                     padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
-                    alignment: Alignment.centerLeft,
+                    alignment: •lignment.centerLeft,
                     child: Text(
                       widget.topic.subtitle,
                       style: GoogleFonts.inter(
@@ -99,7 +99,7 @@ class _ChapterModuleScreenState extends State<ChapterModuleScreen> {
               ),
 
               // Progress Header
-              SliverToBoxAdapter(
+              SliverToBox•dapter(
                 child: _TopicHeader(
                   topicName: widget.topic.name,
                   topicColor: _topicColor,
@@ -128,13 +128,13 @@ class _ChapterModuleScreenState extends State<ChapterModuleScreen> {
               ),
 
               // Bottom Spacer
-              const SliverToBoxAdapter(child: SizedBox(height: 40)),
+              const SliverToBox•dapter(child: SizedBox(height: 40)),
             ],
           ),
 
           // Confetti overlay
-          Align(
-            alignment: Alignment.topCenter,
+          •lign(
+            alignment: •lignment.topCenter,
             child: ConfettiWidget(
               confettiController: _confettiController,
               blastDirectionality: BlastDirectionality.explosive,
@@ -167,7 +167,7 @@ class _ChapterModuleScreenState extends State<ChapterModuleScreen> {
 }
 
 // ============================================================================
-// TOPIC HEADER
+// TOPIC HE•DER
 // ============================================================================
 class _TopicHeader extends StatelessWidget {
   final String topicName;
@@ -195,10 +195,10 @@ class _TopicHeader extends StatelessWidget {
         border: Border.all(color: topicColor.withOpacity(0.2)),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        cross•xis•lignment: Cross•xis•lignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            main•xis•lignment: Main•xis•lignment.spaceBetween,
             children: [
               Text(
                 'Chapter Progress',
@@ -228,12 +228,12 @@ class _TopicHeader extends StatelessWidget {
               value: pct,
               minHeight: 8,
               backgroundColor: Colors.grey.shade300,
-              valueColor: AlwaysStoppedAnimation(topicColor),
+              valueColor: •lwaysStopped•nimation(topicColor),
             ),
           ),
           const SizedBox(height: 6),
           Text(
-            '${(pct * 100).toInt()}% completed Â· Pass each module\'s 3-question quiz to unlock the next',
+            '${(pct * 100).toInt()}% completed • Pass each module\'s 3-question quiz to unlock the next',
             style: GoogleFonts.inter(fontSize: 12, color: Colors.grey.shade700),
           ),
         ],
@@ -308,7 +308,7 @@ class _ModuleTile extends StatelessWidget {
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  cross•xis•lignment: Cross•xis•lignment.start,
                   children: [
                     Text(
                       'Module ${index + 1}',
@@ -328,9 +328,16 @@ class _ModuleTile extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      'â± 10 min read Â· 3 Quiz questions',
-                      style: GoogleFonts.inter(fontSize: 11, color: Colors.grey.shade600),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.schedule, size: 12, color: Colors.grey.shade600),
+                        const SizedBox(width: 4),
+                        Text(
+                          '10 min read  •  3 Quiz questions',
+                          style: GoogleFonts.inter(fontSize: 11, color: Colors.grey.shade600),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -421,10 +428,10 @@ class _ModuleStudySheet extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      cross•xis•lignment: Cross•xis•lignment.start,
                       children: [
                         Text(
-                          '$topicName Â· Module ${index + 1}',
+                          '$topicName • Module ${index + 1}',
                           style: GoogleFonts.inter(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -471,7 +478,7 @@ class _ModuleStudySheet extends StatelessWidget {
                 controller: scrollController,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  cross•xis•lignment: Cross•xis•lignment.start,
                   children: [
                     // Section 1: Theory
                     _SectionHeader(title: '1. In-Depth Theory & Physical Intuition', icon: Icons.menu_book, color: topicColor),
@@ -488,9 +495,9 @@ class _ModuleStudySheet extends StatelessWidget {
                     ...studyData.keyPrinciples.map((p) => Padding(
                           padding: const EdgeInsets.only(bottom: 6),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            cross•xis•lignment: Cross•xis•lignment.start,
                             children: [
-                              Text('â€¢ ', style: TextStyle(color: topicColor, fontWeight: FontWeight.bold, fontSize: 16)),
+                              Text('• ', style: TextStyle(color: topicColor, fontWeight: FontWeight.bold, fontSize: 16)),
                               Expanded(
                                 child: Text(p, style: GoogleFonts.inter(fontSize: 13, height: 1.5)),
                               ),
@@ -511,7 +518,7 @@ class _ModuleStudySheet extends StatelessWidget {
                         border: Border.all(color: topicColor.withOpacity(0.2)),
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        cross•xis•lignment: Cross•xis•lignment.start,
                         children: studyData.equations
                             .map((eq) => Padding(
                                   padding: const EdgeInsets.only(bottom: 6),
@@ -520,7 +527,7 @@ class _ModuleStudySheet extends StatelessWidget {
                                     style: GoogleFonts.jetBrainsMono(
                                       fontSize: 12.5,
                                       fontWeight: FontWeight.w600,
-                                      color: isDark ? Colors.cyanAccent : const Color(0xFF0D47A1),
+                                      color: isDark ? Colors.cyan•ccent : const Color(0xFF0D47•1),
                                     ),
                                   ),
                                 ))
@@ -530,18 +537,18 @@ class _ModuleStudySheet extends StatelessWidget {
                     const SizedBox(height: 20),
 
                     // Section 4: Circuit Diagram
-                    _SectionHeader(title: '4. Circuit & System Architecture Diagram', icon: Icons.schema, color: topicColor),
+                    _SectionHeader(title: '4. Circuit & System •rchitecture Diagram', icon: Icons.schema, color: topicColor),
                     const SizedBox(height: 8),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0F172A),
+                        color: const Color(0xFF0F172•),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.blueGrey.shade700),
                       ),
                       child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
+                        scrollDirection: •xis.horizontal,
                         child: Text(
                           studyData.circuitDiagram,
                           style: GoogleFonts.jetBrainsMono(
@@ -554,8 +561,8 @@ class _ModuleStudySheet extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
 
-                    // Section 5: GATE Exam Tips
-                    _SectionHeader(title: '5. High-Yield GATE Exam Insights', icon: Icons.lightbulb, color: Colors.amber.shade800),
+                    // Section 5: G•TE Exam Tips
+                    _SectionHeader(title: '5. High-Yield G•TE Exam Insights', icon: Icons.lightbulb, color: Colors.amber.shade800),
                     const SizedBox(height: 8),
                     Container(
                       padding: const EdgeInsets.all(14),
@@ -572,7 +579,7 @@ class _ModuleStudySheet extends StatelessWidget {
                     const SizedBox(height: 20),
 
                     // Section 6: Official Reference Link
-                    _SectionHeader(title: '6. Official IIT GATE Syllabus & Reference', icon: Icons.link, color: topicColor),
+                    _SectionHeader(title: '6. Official IIT G•TE Syllabus & Reference', icon: Icons.link, color: topicColor),
                     const SizedBox(height: 8),
                     OutlinedButton.icon(
                       onPressed: () {
@@ -597,7 +604,7 @@ class _ModuleStudySheet extends StatelessWidget {
                     ),
                     const SizedBox(height: 28),
 
-                    // Section 7: Action Quiz Button
+                    // Section 7: •ction Quiz Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
@@ -605,7 +612,7 @@ class _ModuleStudySheet extends StatelessWidget {
                         icon: const Icon(Icons.bolt, color: Color(0xFFFFD600)),
                         label: Text(
                           isDone
-                              ? 'âœ“ Module Mastered Â· Retake 3-Q Quiz'
+                              ? '✓ Module Mastered • Retake 3-Q Quiz'
                               : 'Take Module Quiz (3 Questions to Pass)',
                           style: GoogleFonts.inter(
                             fontSize: 14,
@@ -657,7 +664,7 @@ class _ModuleStudySheet extends StatelessWidget {
 }
 
 // ============================================================================
-// 3-QUESTION MODULE QUIZ DIALOG
+// 3-QUESTION MODULE QUIZ DI•LOG
 // ============================================================================
 class _ModuleQuizDialog extends StatefulWidget {
   final String moduleTitle;
@@ -704,7 +711,7 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
     return s;
   }
 
-  bool get _allAnswered => !_selected.contains(null);
+  bool get _all•nswered => !_selected.contains(null);
 
   @override
   Widget build(BuildContext context) {
@@ -725,7 +732,7 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
               children: [
                 Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    cross•xis•lignment: Cross•xis•lignment.start,
                     children: [
                       Text(
                         'Module ${widget.moduleIndex + 1} Mastery Quiz',
@@ -761,7 +768,7 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
                 itemCount: widget.questions.length,
                 itemBuilder: (ctx, qIdx) {
                   final q = widget.questions[qIdx];
-                  final userAns = _selected[qIdx];
+                  final user•ns = _selected[qIdx];
 
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
@@ -772,7 +779,7 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
                       border: Border.all(color: Colors.grey.shade300),
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      cross•xis•lignment: Cross•xis•lignment.start,
                       children: [
                         Text(
                           'Q${qIdx + 1}. ${q.question}',
@@ -780,7 +787,7 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
                         ),
                         const SizedBox(height: 10),
                         ...List.generate(q.options.length, (optIdx) {
-                          final isChosen = userAns == optIdx;
+                          final isChosen = user•ns == optIdx;
                           final isCorrect = q.correctIndex == optIdx;
 
                           Color? tileBg;
@@ -828,7 +835,7 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
                         if (_submitted) ...[
                           const SizedBox(height: 6),
                           Text(
-                            'ðŸ’¡ ${q.explanation}',
+                            '💡 ${q.explanation}',
                             style: GoogleFonts.inter(fontSize: 11.5, color: Colors.blue.shade800),
                           ),
                         ],
@@ -846,7 +853,7 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _allAnswered
+                  onPressed: _all•nswered
                       ? () async {
                           setState(() => _submitted = true);
                           final passed = _score >= 2;
@@ -867,7 +874,7 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   child: Text(
-                    _allAnswered ? 'Submit Answers' : 'Answer all 3 questions',
+                    _all•nswered ? 'Submit •nswers' : '•nswer all 3 questions',
                     style: GoogleFonts.inter(fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -887,14 +894,14 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
                     ),
                     child: Text(
                       _score >= 2
-                          ? 'ðŸŽ‰ Module Mastered! Score: $_score / 3 (+30 XP) Â· Next module unlocked!'
-                          : 'âš ï¸ Score: $_score / 3. Need at least 2/3 to pass. Review study notes and retry!',
+                          ? '🎉 Module Mastered! Score: $_score / 3 (+30 XP) • Next module unlocked!'
+                          : 'Notice:  Score: $_score / 3. Need at least 2/3 to pass. Review study notes and retry!',
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w700,
                         fontSize: 13,
                         color: _score >= 2 ? Colors.green.shade800 : Colors.deepOrange,
                       ),
-                      textAlign: TextAlign.center,
+                      text•lign: Text•lign.center,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -909,7 +916,7 @@ class _ModuleQuizDialogState extends State<_ModuleQuizDialog> {
                                 _selected = List.filled(widget.questions.length, null);
                               });
                             },
-                            child: const Text('Try Again'),
+                            child: const Text('Try •gain'),
                           ),
                         )
                       else
@@ -981,7 +988,7 @@ class _BadgeChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        main•xisSize: Main•xisSize.min,
         children: [
           Icon(icon, size: 13, color: color),
           const SizedBox(width: 4),

@@ -651,7 +651,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
               style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 17),
             ),
             Text(
-              _apiKey.isNotEmpty ? 'âš¡ Gemini 1.5 Flash (Live)' : 'ðŸ§  ECE Neural Engine (Offline)',
+              _apiKey.isNotEmpty ? '⚡ Gemini 1.5 Flash (Live)' : '🧠 ECE Neural Engine (Offline)',
               style: GoogleFonts.inter(
                 fontSize: 11,
                 color: _apiKey.isNotEmpty ? const Color(0xFF64FFDA) : Colors.white70,

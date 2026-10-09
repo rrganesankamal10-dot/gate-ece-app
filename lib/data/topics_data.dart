@@ -11,7 +11,7 @@ bool topicIdsMatch(String id1, String id2) {
   return false;
 }
 
-// â”€â”€â”€ GATE ECE TOPICS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ------------------------------------------------------------------------------------------------------------------------ GATE ECE TOPICS --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const List<GateTopic> gateTopics = [
   GateTopic(
     id: 'networks',
@@ -186,7 +186,7 @@ const List<GateTopic> gateTopics = [
   ),
 ];
 
-// â”€â”€â”€ GATE ECE FORMULAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ------------------------------------------------------------------------------------------------------------------------ GATE ECE FORMULAS ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const List<GateFormula> gateFormulas = [
   // NETWORKS
   GateFormula(
@@ -195,7 +195,7 @@ const List<GateFormula> gateFormulas = [
     title: "Ohm's Law",
     latex: r'V = I \cdot R',
     description: 'Voltage across a resistor equals current times resistance.',
-    example: 'V = 2A Ã— 10Î© = 20V',
+    example: 'V = 2A × 10Ω = 20V',
   ),
   GateFormula(
     id: 'f_kvl',
@@ -203,7 +203,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Kirchhoff\'s Voltage Law (KVL)',
     latex: r'\sum_{k=1}^{n} V_k = 0',
     description: 'The algebraic sum of all voltages around a closed loop equals zero.',
-    example: 'In a loop: 10V - 4V - 6V = 0 âœ“',
+    example: 'In a loop: 10V - 4V - 6V = 0 (Verified)',
   ),
   GateFormula(
     id: 'f_kcl',
@@ -211,7 +211,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Kirchhoff\'s Current Law (KCL)',
     latex: r'\sum_{k=1}^{n} I_k = 0',
     description: 'The algebraic sum of currents entering a node equals zero.',
-    example: 'Iâ‚ + Iâ‚‚ - Iâ‚ƒ = 0',
+    example: 'I_1 + I_2 - I_3 = 0',
   ),
   GateFormula(
     id: 'f_thevenin',
@@ -219,7 +219,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Thevenin Equivalent',
     latex: r'V_{th} = V_{oc}, \quad R_{th} = \frac{V_{oc}}{I_{sc}}',
     description: 'Any linear circuit can be replaced by a voltage source Vth in series with Rth.',
-    example: 'Vth = 12V, Rth = 4Î©',
+    example: 'Vth = 12V, Rth = 4Ω',
   ),
   GateFormula(
     id: 'f_max_power',
@@ -227,23 +227,23 @@ const List<GateFormula> gateFormulas = [
     title: 'Maximum Power Transfer',
     latex: r'P_{max} = \frac{V_{th}^2}{4R_{th}}, \quad R_L = R_{th}',
     description: 'Maximum power is transferred when load resistance equals Thevenin resistance.',
-    example: 'Pmax = (12)Â² / (4Ã—4) = 9W',
+    example: 'Pmax = (12)² / (4×4) = 9W',
   ),
   GateFormula(
     id: 'f_rc_time',
     topicId: 'networks',
     title: 'RC Time Constant',
     latex: r'\tau = RC, \quad v_C(t) = V_s\left(1 - e^{-t/\tau}\right)',
-    description: 'Time constant Ï„ determines how fast a capacitor charges/discharges.',
-    example: 'Ï„ = 1kÎ© Ã— 1Î¼F = 1ms',
+    description: 'Time constant τ determines how fast a capacitor charges/discharges.',
+    example: 'τ = 1kΩ × 1μF = 1ms',
   ),
   GateFormula(
     id: 'f_rl_time',
     topicId: 'networks',
     title: 'RL Time Constant',
     latex: r'\tau = \frac{L}{R}, \quad i_L(t) = \frac{V_s}{R}\left(1 - e^{-t/\tau}\right)',
-    description: 'Time constant Ï„ for an RL circuit.',
-    example: 'Ï„ = 10mH / 100Î© = 0.1ms',
+    description: 'Time constant τ for an RL circuit.',
+    example: 'τ = 10mH / 100Ω = 0.1ms',
   ),
   GateFormula(
     id: 'f_resonance',
@@ -251,7 +251,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Resonance Frequency',
     latex: r'f_0 = \frac{1}{2\pi\sqrt{LC}}, \quad Q = \frac{f_0}{BW}',
     description: 'Series/parallel LC resonance frequency and quality factor.',
-    example: 'fâ‚€ = 1/(2Ï€âˆš(1mHÃ—1Î¼F)) â‰ˆ 5.03 kHz',
+    example: 'f_0 = 1 / (2π√(1mH × 1μF)) ≈ 5.03 kHz',
   ),
 
   // SIGNALS
@@ -260,8 +260,8 @@ const List<GateFormula> gateFormulas = [
     topicId: 'signals',
     title: 'Fourier Series (Exponential)',
     latex: r'x(t) = \sum_{n=-\infty}^{\infty} c_n e^{jn\omega_0 t}',
-    description: 'Exponential Fourier series of a periodic signal with fundamental frequency Ï‰â‚€ = 2Ï€/T.',
-    example: 'Square wave: câ‚™ = A sinc(n/2) for odd n',
+    description: 'Exponential Fourier series of a periodic signal with fundamental frequency ω_0 = 2π/T.',
+    example: 'Square wave: c_n = A sinc(n/2) for odd n',
   ),
   GateFormula(
     id: 'f_fourier_transform',
@@ -269,7 +269,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Continuous Fourier Transform',
     latex: r'X(j\omega) = \int_{-\infty}^{\infty} x(t)\,e^{-j\omega t}\,dt',
     description: 'Transforms a time-domain signal into frequency domain.',
-    example: 'Rect(t/Ï„) â†” Ï„ sinc(Ï‰Ï„/2Ï€)',
+    example: 'Rect(t/τ) ↔ τ sinc(ωτ/2π)',
   ),
   GateFormula(
     id: 'f_sampling',
@@ -277,7 +277,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Nyquist Sampling Theorem',
     latex: r'f_s \geq 2f_{max}',
     description: 'Sampling rate must be at least twice the highest frequency to avoid aliasing.',
-    example: 'Audio at 20kHz â†’ fs â‰¥ 40kHz (CD: 44.1kHz)',
+    example: 'Audio at 20kHz → fs ≥ 40kHz (CD: 44.1kHz)',
   ),
   GateFormula(
     id: 'f_convolution',
@@ -285,15 +285,15 @@ const List<GateFormula> gateFormulas = [
     title: 'Convolution (LTI Output)',
     latex: r'y(t) = x(t) * h(t) = \int_{-\infty}^{\infty} x(\tau)\,h(t-\tau)\,d\tau',
     description: 'Output of an LTI system is convolution of input with impulse response.',
-    example: 'If h(t)=eâ»áµ—u(t), x(t)=u(t): y(t)=(1-eâ»áµ—)u(t)',
+    example: 'If h(t)=e^(-t)u(t), x(t)=u(t): y(t)=(1-e^(-t))u(t)',
   ),
   GateFormula(
     id: 'f_laplace',
     topicId: 'signals',
     title: 'Laplace Transform',
     latex: r'X(s) = \int_{0^-}^{\infty} x(t)\,e^{-st}\,dt',
-    description: 'Generalized Fourier transform; s = Ïƒ + jÏ‰.',
-    example: 'u(t) â†” 1/s,   eâ»áµƒáµ—u(t) â†” 1/(s+a)',
+    description: 'Generalized Fourier transform; s = Ïƒ + jω.',
+    example: 'u(t) <-> 1/s,   e^(-at)u(t) <-> 1/(s+a)',
   ),
   GateFormula(
     id: 'f_ztransform',
@@ -301,7 +301,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Z-Transform',
     latex: r'X(z) = \sum_{n=-\infty}^{\infty} x[n]\,z^{-n}',
     description: 'Discrete-time counterpart of the Laplace transform.',
-    example: 'aâ¿u[n] â†” z/(z-a), ROC: |z|>|a|',
+    example: 'a^n u[n] <-> z/(z-a), ROC: |z|>|a|',
   ),
 
   // DEVICES
@@ -310,24 +310,24 @@ const List<GateFormula> gateFormulas = [
     topicId: 'devices',
     title: "Shockley Diode Equation",
     latex: r'I_D = I_s\left(e^{V_D/\eta V_T} - 1\right)',
-    description: 'Current through a p-n junction diode. VT = 26mV at room temp, Î· â‰ˆ 1-2.',
-    example: 'At VD=0.7V, IS=1nA: ID â‰ˆ 14mA (Î·=1)',
+    description: 'Current through a p-n junction diode. VT = 26mV at room temp, η ≈ 1-2.',
+    example: 'At VD=0.7V, IS=1nA: ID ≈ 14mA (η=1)',
   ),
   GateFormula(
     id: 'f_bjt_beta',
     topicId: 'devices',
     title: 'BJT Current Relations',
     latex: r'I_C = \beta I_B,\quad I_E = I_C + I_B = (\beta+1)I_B',
-    description: 'BJT current gain Î² (hFE) relates collector to base current.',
-    example: 'Î²=100, IB=20Î¼A â†’ IC=2mA, IE=2.02mA',
+    description: 'BJT current gain β (hFE) relates collector to base current.',
+    example: 'β=100, IB=20μA → IC=2mA, IE=2.02mA',
   ),
   GateFormula(
     id: 'f_mosfet_id',
     topicId: 'devices',
     title: 'MOSFET Drain Current (Saturation)',
     latex: r'I_D = \frac{\mu_n C_{ox}}{2}\frac{W}{L}(V_{GS} - V_{th})^2',
-    description: 'NMOS drain current in saturation region (VDS â‰¥ VGS - Vth).',
-    example: 'Î¼nCox=200Î¼A/VÂ², W/L=10, Vth=0.5V, VGS=1V â†’ ID=0.5mA',
+    description: 'NMOS drain current in saturation region (VDS ≥ VGS - Vth).',
+    example: 'μnCox=200μA/V², W/L=10, Vth=0.5V, VGS=1V → ID=0.5mA',
   ),
 
   // ANALOG
@@ -337,7 +337,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Inverting Op-Amp',
     latex: r'A_v = -\frac{R_f}{R_{in}}',
     description: 'Voltage gain of inverting amplifier configuration.',
-    example: 'Rf=100kÎ©, Rin=10kÎ© â†’ Av = -10',
+    example: 'Rf=100kΩ, Rin=10kΩ → Av = -10',
   ),
   GateFormula(
     id: 'f_noninverting_amp',
@@ -345,7 +345,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Non-Inverting Op-Amp',
     latex: r'A_v = 1 + \frac{R_f}{R_1}',
     description: 'Voltage gain of non-inverting amplifier configuration.',
-    example: 'Rf=90kÎ©, R1=10kÎ© â†’ Av = 10',
+    example: 'Rf=90kΩ, R1=10kΩ → Av = 10',
   ),
   GateFormula(
     id: 'f_filter_cutoff',
@@ -353,7 +353,7 @@ const List<GateFormula> gateFormulas = [
     title: 'RC Filter Cutoff Frequency',
     latex: r'f_c = \frac{1}{2\pi RC}',
     description: '-3dB cutoff frequency for RC low-pass or high-pass filter.',
-    example: 'R=10kÎ©, C=1Î¼F â†’ fc = 15.9 Hz',
+    example: 'R=10kΩ, C=1μF → fc = 15.9 Hz',
   ),
   GateFormula(
     id: 'f_bjt_gm',
@@ -361,7 +361,7 @@ const List<GateFormula> gateFormulas = [
     title: 'BJT Transconductance',
     latex: r'g_m = \frac{I_C}{V_T} = \frac{I_C}{26\,\text{mV}}\;\text{(at 300K)}',
     description: 'Small-signal transconductance of a BJT at room temperature.',
-    example: 'IC=1mA â†’ gm = 1/26 â‰ˆ 38.5 mA/V',
+    example: 'IC=1mA → gm = 1/26 ≈ 38.5 mA/V',
   ),
 
   // DIGITAL
@@ -379,7 +379,7 @@ const List<GateFormula> gateFormulas = [
     title: 'ADC Resolution',
     latex: r'\Delta V = \frac{V_{ref}}{2^n - 1} \approx \frac{V_{ref}}{2^n}',
     description: 'Voltage resolution of an n-bit ADC with full-scale Vref.',
-    example: '12-bit ADC, Vref=5V â†’ Î”V â‰ˆ 1.22 mV',
+    example: '12-bit ADC, Vref=5V → ΔV ≈ 1.22 mV',
   ),
 
   // CONTROL
@@ -389,7 +389,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Closed-Loop Transfer Function',
     latex: r'T(s) = \frac{G(s)}{1 + G(s)H(s)}',
     description: 'Closed-loop TF for a unity/non-unity feedback system.',
-    example: 'G=10/(s+2), H=1 â†’ T=10/(s+12)',
+    example: 'G=10/(s+2), H=1 → T=10/(s+12)',
   ),
   GateFormula(
     id: 'f_routh',
@@ -397,15 +397,15 @@ const List<GateFormula> gateFormulas = [
     title: 'Routh-Hurwitz Criterion',
     latex: r's^n + a_1 s^{n-1} + \cdots + a_n = 0\;\Rightarrow\;\text{all Routh array terms} > 0',
     description: 'Number of sign changes in first column = number of RHP poles.',
-    example: 'sÂ²+3s+2=0: Routh â†’ 1,3; 2 â†’ all positive â†’ stable',
+    example: 's²+3s+2=0: Routh → 1,3; 2 → all positive → stable',
   ),
   GateFormula(
     id: 'f_bode',
     topicId: 'control',
     title: 'Gain Margin & Phase Margin',
-    latex: r'GM = -20\log|G(j\omega_{pc})|\,\text{dB},\quad PM = 180Â° + \angle G(j\omega_{gc})',
-    description: 'GM measured at phase crossover freq Ï‰pc; PM at gain crossover freq Ï‰gc.',
-    example: 'For stable system: GM > 0dB, PM > 0Â°',
+    latex: r'GM = -20\log|G(j\omega_{pc})|\,\text{dB},\quad PM = 180° + \angle G(j\omega_{gc})',
+    description: 'GM measured at phase crossover freq ωpc; PM at gain crossover freq ωgc.',
+    example: 'For stable system: GM > 0dB, PM > 0°',
   ),
 
   // COMMUNICATIONS
@@ -414,16 +414,16 @@ const List<GateFormula> gateFormulas = [
     topicId: 'communications',
     title: 'AM Modulation',
     latex: r's(t) = A_c[1 + \mu\cos(2\pi f_m t)]\cos(2\pi f_c t)',
-    description: 'AM signal with modulation index Î¼ = Am/Ac. Bandwidth = 2fm.',
-    example: 'Î¼=0.5, Ac=10V â†’ 75% efficiency',
+    description: 'AM signal with modulation index μ = Am/Ac. Bandwidth = 2fm.',
+    example: 'μ=0.5, Ac=10V → 75% efficiency',
   ),
   GateFormula(
     id: 'f_fm_bw',
     topicId: 'communications',
     title: 'FM Bandwidth (Carson\'s Rule)',
     latex: r'BW_{FM} = 2(\Delta f + f_m) = 2f_m(1 + \beta)',
-    description: 'Î² = Î”f/fm is the modulation index. Carson\'s rule gives 98% power bandwidth.',
-    example: 'Î”f=5kHz, fm=1kHz â†’ BW=12kHz',
+    description: 'β = Δf/fm is the modulation index. Carson\'s rule gives 98% power bandwidth.',
+    example: 'Δf=5kHz, fm=1kHz → BW=12kHz',
   ),
   GateFormula(
     id: 'f_shannon',
@@ -431,7 +431,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Shannon Channel Capacity',
     latex: r'C = B\log_2\!\left(1 + \frac{S}{N}\right)\;\text{bits/s}',
     description: 'Maximum error-free data rate over a noisy channel of bandwidth B Hz.',
-    example: 'B=4kHz, SNR=31 â†’ C=20 kbps',
+    example: 'B=4kHz, SNR=31 → C=20 kbps',
   ),
   GateFormula(
     id: 'f_noise_figure',
@@ -439,7 +439,7 @@ const List<GateFormula> gateFormulas = [
     title: 'Noise Figure',
     latex: r'NF = 10\log_{10}\!\left(\frac{SNR_{in}}{SNR_{out}}\right)\;\text{dB}',
     description: 'Noise figure measures how much a device degrades the signal-to-noise ratio.',
-    example: 'SNRin/SNRout = 2 â†’ NF = 3.01 dB',
+    example: 'SNRin/SNRout = 2 → NF = 3.01 dB',
   ),
 
   // ELECTROMAGNETICS
@@ -449,7 +449,7 @@ const List<GateFormula> gateFormulas = [
     title: "Faraday's Law (Maxwell)",
     latex: r'\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}',
     description: 'A changing magnetic field induces an electric field (basis of EMI/antennas).',
-    example: 'A solenoid changing B at 1T/s induces EMF = N Ã— dÎ¦/dt',
+    example: 'A solenoid changing B at 1T/s induces EMF = N × dΦ/dt',
   ),
   GateFormula(
     id: 'f_vswr',
@@ -457,7 +457,7 @@ const List<GateFormula> gateFormulas = [
     title: 'VSWR & Reflection Coefficient',
     latex: r'\Gamma = \frac{Z_L - Z_0}{Z_L + Z_0},\quad VSWR = \frac{1+|\Gamma|}{1-|\Gamma|}',
     description: 'Voltage Standing Wave Ratio measures mismatch on a transmission line.',
-    example: 'ZL=75Î©, Z0=50Î© â†’ Î“=0.2, VSWR=1.5',
+    example: 'ZL=75Ω, Z0=50Ω → Γ=0.2, VSWR=1.5',
   ),
   GateFormula(
     id: 'f_skin_depth',
@@ -465,6 +465,6 @@ const List<GateFormula> gateFormulas = [
     title: 'Skin Depth',
     latex: r'\delta = \sqrt{\frac{2}{\omega\mu\sigma}} = \frac{1}{\sqrt{\pi f \mu \sigma}}',
     description: 'Depth at which current density falls to 1/e of surface value.',
-    example: 'Copper at 1MHz: Î´ â‰ˆ 66 Î¼m',
+    example: 'Copper at 1MHz: δ ≈ 66 μm',
   ),
 ];
